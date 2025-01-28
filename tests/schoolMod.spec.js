@@ -1,6 +1,7 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 import { login } from '../helpers/school_mod_login.js';
+import exp from 'constants';
 
 
 test('has Login button', async ({ page }) => {
@@ -100,3 +101,32 @@ test('is able to delete user', async ({ page }) => {
     await page.getByRole('button', { name: 'Delete User' }).click();
 });
 
+test('is able to search a valid and invalid user', async ({ page }) => {
+    await login(page);
+    await expect(page.locator('//*[@id="dashboard"]/div[1]/div/div/div/img')).toBeVisible();
+    await page.click('a.btn.btn-estoryalight.w-100');
+    await expect(page.getByText('User Management')).toBeVisible();
+    await page.getByPlaceholder('Search for user name').fill('Joshua User18');
+    await expect(page.getByText('Joshua User18')).toBeVisible();
+    await page.getByPlaceholder('Search for user name').clear();
+    await expect(page.locator('div').filter({ hasText: /^Users 100 result\/s$/ }).nth(1)).toBeVisible();
+});
+
+test('Quick task to function correctly', async ({ page }) => {
+    await login(page);
+    await expect(page.locator('//*[@id="dashboard"]/div[1]/div/div/div/img')).toBeVisible();
+    await page.getByRole('link', { name: 'Manage Classrooms' }).click();
+    await expect(page.getByPlaceholder('Search for Classroom')).toBeVisible();
+    await page.getByRole('link', { name: 'Dashboard' }).click();
+    await page.getByRole('link', { name: 'Manage Teachers' }).click();
+    await expect(page.getByPlaceholder('Search for Teacher')).toBeVisible();
+    await page.getByRole('link', { name: 'Dashboard' }).click();
+    await page.getByRole('link', { name: 'Manage Students' }).click();
+    await expect(page.getByRole('textbox', { name: 'Search for Student' })).toBeVisible();
+});
+
+test('Is able to add new a new classroom', async ({ page }) => {
+    await login(page);
+    await expect(page.locator('//*[@id="dashboard"]/div[1]/div/div/div/img')).toBeVisible();
+    await page.getByRole('link', { name: 'Add Classroom' }).click();
+});
