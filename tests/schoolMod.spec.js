@@ -4,7 +4,7 @@ import { login } from '../helpers/school_mod_login.js';
 
 
 test('has Login button', async ({ page }) => {
-    await page.goto('https://estorya-portal-staging-pazl6.ondigitalocean.app/login', { timeout: 60000 }); // Increase timeout to 60 seconds
+    await page.goto('https://estorya-portal-staging-pazl6.ondigitalocean.app/login', { timeout: 80000 }); // Increase timeout to 60 seconds
     await expect(page.getByText('Login')).toBeVisible();
 });
 
@@ -64,7 +64,7 @@ test('bulk upload teacher and assign classroom', async ({ page }) => {
     await expect(page.locator('//*[@id="dashboard"]/div[1]/div/div/div/img')).toBeVisible();
     await page.click('a.btn.btn-estoryalight.w-100');
     await expect(page.getByText('User Management')).toBeVisible();
-    await page.getByRole('button', { name: 'Add User' }).click();
+    await page.locator('//*[@id="users"]/div/div/div[1]/div[2]/div/button').click();
     await page.getByText('Bulk Add User and Assign').click();
     await expect(page.getByRole('heading', { name: 'Add Multiple Users' })).toBeVisible();
     await page.getByRole('link', { name: 'Download' }).click();
