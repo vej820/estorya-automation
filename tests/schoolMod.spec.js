@@ -72,3 +72,31 @@ test('bulk upload teacher and assign classroom', async ({ page }) => {
     const fileInput = page.locator('input[type="file"]'); // Adjust the locator to target the file input
     await fileInput.setInputFiles('files/Bulk_teacher_upload.csv');
 });
+
+test('is able to update user', async ({ page }) => {
+    await login(page);
+    await expect(page.locator('//*[@id="dashboard"]/div[1]/div/div/div/img')).toBeVisible();
+    await page.click('a.btn.btn-estoryalight.w-100');
+    await expect(page.getByText('User Management')).toBeVisible();
+    await page.getByRole('row', { name: 'AA A11462 A11462 A1146@email.' }).getByRole('button').click();
+    await page.getByRole('menuitem', { name: 'Edit User' }).click();
+    await page.getByRole('textbox', { name: 'First Name *' }).fill('Vegie');
+    await page.getByRole('textbox', { name: 'Last Name *' }).fill('Sison');
+    await page.locator('#middlename').fill('Mango');
+    await page.getByLabel('Roles *').selectOption('School Moderator');
+    await page.getByRole('button', { name: 'Save User' }).click();
+});
+
+test('is able to delete user', async ({ page }) => {
+    await login(page);
+    await expect(page.locator('//*[@id="dashboard"]/div[1]/div/div/div/img')).toBeVisible();
+    await page.click('a.btn.btn-estoryalight.w-100');
+    await expect(page.getByText('User Management')).toBeVisible();
+    await page.getByRole('row', { name: 'AA A11462 A11462 A1146@email.' }).getByRole('button').click();
+    await page.getByRole('menuitem', { name: 'Delete User' }).click();
+    await page.getByRole('button', { name: 'Cancel' }).click();
+    await page.getByRole('row', { name: 'AA A11462 A11462 A1146@email.' }).getByRole('button').click();
+    await page.getByRole('menuitem', { name: 'Delete User' }).click();
+    await page.getByRole('button', { name: 'Delete User' }).click();
+});
+
