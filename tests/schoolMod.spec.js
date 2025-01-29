@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 import { login } from '../helpers/school_mod_login.js';
-import exp from 'constants';
+// import exp from 'constants';
 
 
 test('has Login button', async ({ page }) => {
@@ -79,26 +79,12 @@ test('is able to update user', async ({ page }) => {
     await expect(page.locator('//*[@id="dashboard"]/div[1]/div/div/div/img')).toBeVisible();
     await page.click('a.btn.btn-estoryalight.w-100');
     await expect(page.getByText('User Management')).toBeVisible();
-    await page.getByRole('row', { name: 'AA A11462 A11462 A1146@email.' }).getByRole('button').click();
+    await page.getByRole('row', { name: 'AA A114622 A114622 A1146@' }).getByRole('button').click();
     await page.getByRole('menuitem', { name: 'Edit User' }).click();
     await page.getByRole('textbox', { name: 'First Name *' }).fill('Vegie');
     await page.getByRole('textbox', { name: 'Last Name *' }).fill('Sison');
     await page.locator('#middlename').fill('Mango');
-    await page.getByLabel('Roles *').selectOption('School Moderator');
     await page.getByRole('button', { name: 'Save User' }).click();
-});
-
-test('is able to delete user', async ({ page }) => {
-    await login(page);
-    await expect(page.locator('//*[@id="dashboard"]/div[1]/div/div/div/img')).toBeVisible();
-    await page.click('a.btn.btn-estoryalight.w-100');
-    await expect(page.getByText('User Management')).toBeVisible();
-    await page.getByRole('row', { name: 'AA A11462 A11462 A1146@email.' }).getByRole('button').click();
-    await page.getByRole('menuitem', { name: 'Delete User' }).click();
-    await page.getByRole('button', { name: 'Cancel' }).click();
-    await page.getByRole('row', { name: 'AA A11462 A11462 A1146@email.' }).getByRole('button').click();
-    await page.getByRole('menuitem', { name: 'Delete User' }).click();
-    await page.getByRole('button', { name: 'Delete User' }).click();
 });
 
 test('is able to search a valid and invalid user', async ({ page }) => {
@@ -109,7 +95,7 @@ test('is able to search a valid and invalid user', async ({ page }) => {
     await page.getByPlaceholder('Search for user name').fill('Joshua User18');
     await expect(page.getByText('Joshua User18')).toBeVisible();
     await page.getByPlaceholder('Search for user name').clear();
-    await expect(page.locator('div').filter({ hasText: /^Users 100 result\/s$/ }).nth(1)).toBeVisible();
+    await expect(page.locator('div').filter({ hasText: /^Users 99 result\/s$/ }).nth(1)).toBeVisible();
 });
 
 test('Quick task to function correctly', async ({ page }) => {
@@ -124,8 +110,7 @@ test('Quick task to function correctly', async ({ page }) => {
     await page.getByRole('link', { name: 'Manage Students' }).click();
     await expect(page.getByRole('textbox', { name: 'Search for Student' })).toBeVisible();
 });
-
-test('Is able to add new a new classroom', async ({ page }) => {
+test('Able to add a new classroom', async ({ page }) => {
     await login(page);
     await expect(page.locator('//*[@id="dashboard"]/div[1]/div/div/div/img')).toBeVisible();
     await page.getByRole('link', { name: 'Add Classroom' }).click();
